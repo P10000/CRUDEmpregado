@@ -1,0 +1,20 @@
+Thu May 16 21:30:04 BRT 2019 : Apache Derby Servidor de Rede - 10.10.2.0 - (1582446) iniciado e pronto para aceitar conexões na porta 1527 em {3}
+----------------------------------------------------------------
+Thu May 16 21:43:05 BRT 2019:
+ Inicializando o Derby versão The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instância a816c00e-016a-c332-2410-00006141a4fe
+no diretório de banco de dados C:\base_de_dados_paulo\projeto_paulo 
+
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_171-b11
+user.dir=C:\Program Files\glassfish-4.1.1\javadb
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=C:\base_de_dados_paulo
+Carregador de classe do banco de dados iniciado - derby.database.classpath=''
+----------------------------------------------------------------
+Thu May 16 22:32:44 BRT 2019: Shutting down Derby engine
+----------------------------------------------------------------
+Thu May 16 22:32:44 BRT 2019:
+Encerrando a instância a816c00e-016a-c332-2410-00006141a4fe
+----------------------------------------------------------------

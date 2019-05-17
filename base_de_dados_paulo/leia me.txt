@@ -1,0 +1,8 @@
+banco de dados
+projeto_paulo
+
+usuario
+paulo
+
+senha
+123456

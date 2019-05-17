@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Menu</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                $("#cad_empregados").hide();
+                $("#consulta_empregados").hide();
+
+                $("#cadastrar").click(function () {
+                    $("#cad_empregados").show();
+                    $("#consulta_empregados").hide();
+                });
+
+                $("#consultar").click(function () {
+                    $("#consulta_empregados").show();
+                    $("#cad_empregados").hide();
+                });
+
+                $("#sair_cadastro").click(function () {
+                    $("#cad_empregados").hide();
+                });
+
+                $("#sair_consulta").click(function () {
+                    $("#consulta_empregados").hide();
+                });
+
+                /*
+                 $("#consulta").click(function () {
+                 alert(document.getElementById('opcaoconsulta').value);
+                 alert(document.getElementById('buscar').value);
+                 });
+                 */
+
+                 /*Consulta todos os registros*/
+                $("#consultatodos").click(function () {
+                    $.ajax({
+                        async: false,
+                        type: 'GET',
+                        url: "http://localhost:8080/CRUDEmpregado/webresources/empregados/consulta",
+                        //data: "{'ID', 'NOME', 'cargo','salario'}",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "text",
+                        success: function (data) {
+                            var empregado = JSON.parse(data);
+                            var valor;
+
+                            empregado.forEach(function (e, index) {
+                                var mostrar = "<tr><td>" + e.id + "</td>"+ "<td>" + e.nome + "</td>"+ "<td>" +  e.cargo + "</td>" + "<td>" + e.salario + "</td></tr>";
+                                valor += mostrar;
+                            });
+                            $('#tabela').html(valor);
+                        },
+                        beforeSend: function () {
+                            $('#loader').css({display: "block"});
+                        },
+                        complete: function ( ) {
+                            $('#loader').css({display: "none"});
+                        },
+                        failure: function (data) {
+                            alert("a requisição falhou");
+                        }
+
+                    });
+                });
+
+                $("#consulta").click(function () {
+                    
+                    //alert($('#buscar').val());
+                    
+                   $.ajax({
+                        async: false,
+                        type: "POST",
+                        url: "http://localhost:8080/CRUDEmpregado/webresources/empregados/delete"+$('#buscar').val(),
+                        dataType: "text",
+                        success: function (data) {
+                            alert("a requisição funcionaou");
+                        },
+                        failure: function (data) {
+                            alert("a requisição falhou");
+                        },
+
+                        data: sendInfo
+                    });
+                    
+                  
+                });
+
+
+
+                function fechar() {
+
+                    alert("Função em desenvolvimento!");
+                }
+
+
+});
+</script>
+
+
+    </head>
+    <body>
+        <div class="container">
+            <h1>Sistema do Paulo</h1>
+            <hr>
+
+
+
+            <div class="row">
+
+                <!-- Coluna 1 -->
+                <div class="col-sm-4">
+                    <!-- Menu -->
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">EMPREGADOS
+                            <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><a id="cadastrar" href="#">Cadastrar</a></li>
+                            <li><a id="consultar" href="#">Consultar</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" onclick="fechar()">Sair</a></li>
+                        </ul>
+                    </div><!-- Fim menu -->
+
+                </div>
+                <!-- Fim coluna 1 -->
+
+                <!-- Coluna 2 -->
+                <div class="col-sm-8">
+                    <!-- Cadastro de empregados -->
+                    <div id="cad_empregados">
+                        <form action="AdicionaEmpregado">
+
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">Cadastro de Empregados</div>
+                                <div class="panel-body">
+                                    <div class="form-group row" >
+                                        <div class="col-xs-2">
+                                            <label for="id">ID:</label>
+                                            <input id="id" class="form-control" name="id" type="text" placeholder="ID" maxlength="4" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-xs-4">
+                                            <label for="nome">Nome:</label>
+                                            <input id="nome" class="form-control" name="nome" type="text" placeholder="Nome">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-xs-4">
+                                            <label for="cargo">Cargo:</label>
+                                            <input id="cargo" class="form-control" name="cargo" type="text" placeholder="Cargo">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-xs-4">
+                                            <label for="salario">Salário:</label>
+                                            <input id="salario" class="form-control" name="salario" type="text" placeholder="Salário">
+                                        </div>
+                                    </div>
+
+                                    <hr>
+                                    <div>
+                                        <button type="button" class="btn btn-primary">Novo</button>
+                                        <button type="button" class="btn btn-primary">Alterar</button>
+                                        <button type="button" class="btn btn-primary">Excluir</button>
+                                        <button type="reset" class="btn btn-primary">Limpar</button>
+                                        <button type="submit" class="btn btn-primary">Gravar</button>
+                                        <button id="sair_cadastro" type="button" class="btn btn-primary">Sair</button>
+                                    </div>
+
+                                    </form>
+
+                                </div>
+                            </div>
+                    </div><!-- Fim cadastro de empregados -->
+
+                    <div id="consulta_empregados"><!-- Consulta de empregados -->
+                        <form>
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">Consulta de Empregados</div>
+                                <div class="panel-body">
+
+                                    <div class="form-group row">
+                                        <div class="col-xs-4">
+                                            <label for="sel1">Selecione o tipo de consulta:</label>
+                                            <select class="form-control" id="opcaoconsulta">
+                                                <option value="id" >ID</option>
+                                                <option value="nome">NOME</option>
+                                                <option value="cargo">CARGO</option>
+                                                <option value="salario">SALARIO</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <div class="form-group row" >
+                                        <div class="col-xs-8">
+                                            <input id="buscar" class="form-control" name="buscar" type="text" placeholder="Buscar">
+                                        </div>
+                                    </div>
+
+                                    <hr>
+                                    <div>
+                                        <button type="button" id="consulta" class="btn btn-primary">Consultar</button>
+                                        <button type="button" id="consultatodos" class="btn btn-primary">Consultar Todos Funcionários</button>
+                                        <button id="sair_consulta" type="button" class="btn btn-primary">Sair</button>
+                                    </div>
+
+                                    </form>
+
+                                </div>
+                            </div><!-- Fim consulta de empregados -->
+                            <div>
+                                <p>
+                                    <img src="images/carregando.gif" style="display: none" id="loader" alt=""/>
+
+                                </p>
+                                <table class="table"  >
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>NOME</th>
+                                            <th>CARGO</th>
+                                            <th>SALÁRIO</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabela">
+                                    </tbody>
+                                </table>
+
+                            </div>
+                    </div>
+                    <!-- Fim coluna 1 -->
+
+
+
+                </div> <!-- Fim container -->
+
+                </body>
+                </html>

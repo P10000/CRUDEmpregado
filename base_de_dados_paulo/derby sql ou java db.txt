@@ -1,0 +1,16 @@
+CREATE TABLE empregados (
+
+ 	id" INT not null primary key GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+ 	nome VARCHAR(30),
+ 	cargo VARCHAR(30),
+	salario DOUBLE
+);
+
+CREATE TABLE empregados (
+
+id INT not null primary key GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+nome VARCHAR(30),
+cargo VARCHAR(30),
+salario DOUBLE
+);
+
